@@ -5,7 +5,6 @@ import android.icu.text.SimpleDateFormat
 import android.text.format.DateFormat
 import android.util.Log
 import androidx.core.text.isDigitsOnly
-import androidx.room.Room
 import io.terameteo.listofaction.R
 import java.time.LocalDate
 import java.time.ZoneId
@@ -21,10 +20,8 @@ const val MY_MODEL="myModel"
 const val DEFAULT_REWARD = 30
 
 class MyModel {
-    private lateinit var db: ItemCollectionDB
     lateinit var dao: ItemCollectionDAO
 
-// MakeItemListの前に実行
     fun getDayStringJp(backDate:Int): String {
         val local = Locale.JAPAN
         val pattern = DateFormat.getBestDateTimePattern(local, "YYYYEEEMMMd")

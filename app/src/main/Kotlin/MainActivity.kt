@@ -2,30 +2,35 @@ package io.terameteo.listofaction
 
 import android.os.Bundle
 import android.view.Menu
-import com.google.android.material.snackbar.Snackbar
-import com.google.android.material.navigation.NavigationView
-import androidx.drawerlayout.widget.DrawerLayout
 import androidx.appcompat.app.AppCompatActivity
+import androidx.drawerlayout.widget.DrawerLayout
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
-import androidx.navigation.fragment.NavHostFragment.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
-import io.terameteo.listofaction.R
+import com.google.android.material.navigation.NavigationView
+import com.google.android.material.snackbar.Snackbar
 import io.terameteo.listofaction.databinding.ActivityMainBinding
+import io.terameteo.listofaction.model.MyModel
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
+    private val  mViewModel: MainViewModel by lazy {
+        val myModel = MyModel()
+        val db = MyApplication.myDatabase
+        val factory =  MainViewModel.Factory(db,myModel)
+        ViewModelProvider(this,factory)[MainViewModel::class.java]
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-         super.onCreate(savedInstanceState)
-
+        super.onCreate(savedInstanceState)
+        mViewModel.initialize(baseContext)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
         setSupportActionBar(binding.appBarMain.toolbar)
 
         binding.appBarMain.fab.setOnClickListener { view ->

@@ -1,7 +1,6 @@
 package io.terameteo.listofaction
 
 import android.app.Application
-import android.content.Context
 import androidx.room.Room
 import io.terameteo.listofaction.model.ItemCollectionDB
 import io.terameteo.listofaction.model.MyModel
@@ -9,7 +8,7 @@ import io.terameteo.listofaction.model.MyModel
 class MyApplication : Application(){
     companion object {
         lateinit var _database: ItemCollectionDB
-        val myDatabase get() = _database!!
+        val myDatabase get() = _database
     }
 
     override fun onCreate() {
@@ -18,5 +17,6 @@ class MyApplication : Application(){
         val db = Room.databaseBuilder(this, ItemCollectionDB::class.java, "collection_item")
             .fallbackToDestructiveMigration()
             .build()
+
     }
 }

@@ -13,46 +13,46 @@ const val DATE_JP = 1
 const val DATE_EN = 2
 const val DATE_SHORT = 3
 
-class MainViewModel(private val myModel: MyModel) : ViewModel() {
-    private val  viewModelIOScope =  CoroutineScope(Job() + viewModelScope.coroutineContext + Dispatchers.IO)
+class MainViewModel(private val itemDb: ItemCollectionDB,private val myModel: MyModel) : ViewModel() {
+    private val viewModelIOScope =  CoroutineScope(Job() + viewModelScope.coroutineContext + Dispatchers.IO)
+    private val itemDao = itemDb.itemCollectionDAO()
     // LiveData
-    val allItemList:LiveData<List<ItemEntity>> =  myModel.dao.getAll()
+    val allItemList:LiveData<List<ItemEntity>> =  itemDao.getAll()
     private val currentReward:MutableLiveData<Int> = MutableLiveData(0)
     val currentRewardStr = MediatorLiveData<String>()
     val currentPage = MutableLiveData(0)
-    val currentCategory = MutableLiveData("")
-    val usedCategories= MediatorLiveData<List<CategoryWithChecked>>()
+//    val currentCategory = MutableLiveData("")
+//    val usedCategories= MediatorLiveData<List<CategoryWithChecked>>()
 
     fun initialize(_context:Context) {
         currentReward.postValue(myModel.loadRewardFromPreference(_context))
         currentRewardStr.addSource(currentReward) { value -> currentRewardStr.postValue("$value　円") }
-        currentCategory.postValue(myModel.loadCategoryFromPreference(_context))
 
-        usedCategories.addSource(allItemList){
-            if(it.isNullOrEmpty()) return@addSource
-            val list = myModel.makeCategoryList(it)
-            val newList = updateCategoryList(list)
-            if(newList.isNotEmpty()) usedCategories.postValue(newList)
-        }
-        usedCategories.addSource(currentCategory){
-            val list = usedCategories.value
-            if(list.isNullOrEmpty()) return@addSource
-            val newlist = List(list.size){
-                index -> CategoryWithChecked(list[index].title,(list[index].title == it))
-            }
-            usedCategories.postValue(newlist)
-        }
+//        currentCategory.postValue(myModel.loadCategoryFromPreference(_context))
+//        usedCategories.addSource(allItemList){
+//            if(it.isNullOrEmpty()) return@addSource
+//            val list = myModel.makeCategoryList(it)
+//            val newList = updateCategoryList(list)
+//            if(newList.isNotEmpty()) usedCategories.postValue(newList)
+//        }
+//        usedCategories.addSource(currentCategory){
+//            val list = usedCategories.value
+//            if(list.isNullOrEmpty()) return@addSource
+//            val newlist = List(list.size){
+//                index -> CategoryWithChecked(list[index].title,(list[index].title == it))
+//            }
+//            usedCategories.postValue(newlist)
+//        }
     }
-    private fun updateCategoryList(list:List<String>):List<CategoryWithChecked> {
-        return List(list.size){ i ->  CategoryWithChecked(list[i], (list[i] == currentCategory.value )) }
-    }
+//    private fun updateCategoryList(list:List<String>):List<CategoryWithChecked> {
+//        return List(list.size){ i ->  CategoryWithChecked(list[i], (list[i] == currentCategory.value )) }
+//    }
 
 
     fun stateSave(_context: Context) {
         val reward = currentReward.value ?:0
         myModel.saveRewardToPreference(reward,_context)
-        myModel.saveCurrentCategory(currentCategory.value ?:"",_context)
-
+//        myModel.saveCurrentCategory(currentCategory.value ?:"",_context)
     }
     fun flipItemHistory(item:ItemEntity,dateStr: String){
         // クリックでその日の完了/未完了を切り替える｡ dateStr YYYY/m/d
@@ -78,7 +78,7 @@ class MainViewModel(private val myModel: MyModel) : ViewModel() {
         var newId = currentList.size
         // idが被らない様に処理
         do {
-             var duplicateItem = currentList.firstOrNull() { itemEntity -> itemEntity.id == newId }
+             var duplicateItem = currentList.firstOrNull { itemEntity -> itemEntity.id == newId }
              newId++
         } while (duplicateItem != null)
 
@@ -119,10 +119,11 @@ class MainViewModel(private val myModel: MyModel) : ViewModel() {
             }
         }
     }
-    class Factory(private val model:MyModel):ViewModelProvider.NewInstanceFactory(){
+    class Factory(private val _itemDb:ItemCollectionDB,private val _myModel:MyModel):ViewModelProvider.NewInstanceFactory(){
         @Suppress("unchecked_cast")
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-            return MainViewModel(model) as T
+
+            return MainViewModel(_itemDb,_myModel) as T
         }
     }
 }
