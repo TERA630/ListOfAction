@@ -6,10 +6,9 @@ import io.terameteo.listofaction.model.ItemCollectionDB
 import io.terameteo.listofaction.model.MyModel
 
 class MyApplication : Application(){
-    companion object {
-        lateinit var myDB: ItemCollectionDB
-        lateinit var myModel: MyModel
-    }
+
+    lateinit var myDB: ItemCollectionDB
+    lateinit var myModel: MyModel
 
     override fun onCreate() {
         super.onCreate()

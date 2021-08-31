@@ -19,7 +19,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
     private val  mViewModel: MainViewModel by lazy {
-        val factory =  MainViewModel.Factory(MyApplication.myDB,MyApplication.myModel)
+        val app = (application as MyApplication)
+        val factory =  MainViewModel.Factory(app.myDB,app.myModel)
         ViewModelProvider(this,factory)[MainViewModel::class.java]
     }
 
