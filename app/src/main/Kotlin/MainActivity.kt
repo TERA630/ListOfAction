@@ -13,16 +13,13 @@ import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.navigation.NavigationView
 import com.google.android.material.snackbar.Snackbar
 import io.terameteo.listofaction.databinding.ActivityMainBinding
-import io.terameteo.listofaction.model.MyModel
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
     private val  mViewModel: MainViewModel by lazy {
-        val myModel = MyModel()
-        val db = MyApplication.myDatabase
-        val factory =  MainViewModel.Factory(db,myModel)
+        val factory =  MainViewModel.Factory(MyApplication.myDB,MyApplication.myModel)
         ViewModelProvider(this,factory)[MainViewModel::class.java]
     }
 

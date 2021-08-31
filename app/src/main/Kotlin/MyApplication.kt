@@ -7,14 +7,14 @@ import io.terameteo.listofaction.model.MyModel
 
 class MyApplication : Application(){
     companion object {
-        lateinit var _database: ItemCollectionDB
-        val myDatabase get() = _database
+        lateinit var myDB: ItemCollectionDB
+        lateinit var myModel: MyModel
     }
 
     override fun onCreate() {
         super.onCreate()
-        val myModel = MyModel()
-        val db = Room.databaseBuilder(this, ItemCollectionDB::class.java, "collection_item")
+        myModel = MyModel()
+        myDB = Room.databaseBuilder(this, ItemCollectionDB::class.java, "collection_item")
             .fallbackToDestructiveMigration()
             .build()
 
