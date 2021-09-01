@@ -20,7 +20,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private val  mViewModel: MainViewModel by lazy {
         val app = (application as MyApplication)
-        val factory =  MainViewModel.Factory(app.myDB,app.myModel)
+        val factory =  MainViewModel.Factory(app.itemDAO,app.myModel)
         ViewModelProvider(this,factory)[MainViewModel::class.java]
     }
 

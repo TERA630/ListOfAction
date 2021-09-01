@@ -13,11 +13,11 @@ const val DATE_JP = 1
 const val DATE_EN = 2
 const val DATE_SHORT = 3
 
-class MainViewModel(private val itemDb: ItemCollectionDB,private val myModel: MyModel) : ViewModel() {
+class MainViewModel(itemDAO: ItemCollectionDAO,
+                    private val myModel: MyModel) : ViewModel() {
     private val viewModelIOScope =  CoroutineScope(Job() + viewModelScope.coroutineContext + Dispatchers.IO)
-    private val itemDao = itemDb.itemCollectionDAO()
     // LiveData
-    val allItemList:LiveData<List<ItemEntity>> =  itemDao.getAll()
+    val allItemList:LiveData<List<ItemEntity>> = itemDAO.getAll()
     private val currentReward:MutableLiveData<Int> = MutableLiveData(0)
     val currentRewardStr = MediatorLiveData<String>()
     val currentPage = MutableLiveData(0)
@@ -119,10 +119,9 @@ class MainViewModel(private val itemDb: ItemCollectionDB,private val myModel: My
             }
         }
     }
-    class Factory(private val _itemDb:ItemCollectionDB,private val _myModel:MyModel):ViewModelProvider.NewInstanceFactory(){
+    class Factory(private val _itemDb:ItemCollectionDAO,private val _myModel:MyModel):ViewModelProvider.NewInstanceFactory(){
         @Suppress("unchecked_cast")
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-
             return MainViewModel(_itemDb,_myModel) as T
         }
     }
