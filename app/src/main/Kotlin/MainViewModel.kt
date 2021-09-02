@@ -13,7 +13,7 @@ const val DATE_JP = 1
 const val DATE_EN = 2
 const val DATE_SHORT = 3
 
-class MainViewModel(itemDAO: ItemCollectionDAO,
+class MainViewModel(private val itemDAO: ItemCollectionDAO,
                     private val myModel: MyModel) : ViewModel() {
     private val viewModelIOScope =  CoroutineScope(Job() + viewModelScope.coroutineContext + Dispatchers.IO)
     // LiveData
@@ -66,7 +66,7 @@ class MainViewModel(itemDAO: ItemCollectionDAO,
             item.appendDate(dateStr)
             currentValue + item.reward
         }
-        viewModelIOScope.launch { myModel.dao.update(item) }
+        viewModelIOScope.launch { itemDAO.update(item) }
         currentReward.postValue(newValue)
     }
 
@@ -85,26 +85,26 @@ class MainViewModel(itemDAO: ItemCollectionDAO,
         val newItem = ItemEntity(id = newId, title = newTitle,reward = newReward,category = newCategory)
 
         viewModelIOScope.launch {
-            myModel.dao.insert(newItem)
+            itemDAO.insert(newItem)
             Log.i(VIEW_MODEL,"item $newTitle was appended to List")
         }
     }
     fun deleteItem(item: ItemEntity){
         viewModelIOScope.launch {
-            myModel.dao.delete(item)
+            itemDAO.delete(item)
             Log.i(VIEW_MODEL,"item ${item.title}  ${item.id} was deleted to List")
         }
     }
     fun saveListToRoom(_list:List<ItemEntity>){
         viewModelIOScope.launch {
-            myModel.dao.updateList(_list)
+            itemDAO.updateList(_list)
         }
     }
     fun makeListFromResource(_context: Context){
         viewModelIOScope.launch {
             val list = myModel.makeItemListFromResource(_context)
             list.forEach { item ->
-                myModel.dao.insert(item)
+                itemDAO.insert(item)
             }
         }
     }

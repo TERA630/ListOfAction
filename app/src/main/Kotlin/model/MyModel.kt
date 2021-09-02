@@ -20,7 +20,6 @@ const val MY_MODEL="myModel"
 const val DEFAULT_REWARD = 30
 
 class MyModel {
-    lateinit var dao: ItemCollectionDAO
 
     fun getDayStringJp(backDate:Int): String {
         val local = Locale.JAPAN

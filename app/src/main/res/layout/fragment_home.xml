@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="ui.home.HomeFragment">
+    tools:context=".ui.HomeFragment">
     <TextView
         android:id="@+id/dateShowing"
         android:layout_width="0dp"
@@ -25,7 +25,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/dateShowing"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         tools:layout_height="400dp"
         tools:itemCount="20"
@@ -41,9 +40,8 @@
         android:layout_marginEnd="8dp"
         android:textAlignment="center"
         android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="@string/large_text"/>
+        app:layout_constraintTop_toTopOf="@id/homeList"
+        app:layout_constraintVertical_bias="1.0"
+        tools:text="@string/large_text" />
 </androidx.constraintlayout.widget.ConstraintLayout>
