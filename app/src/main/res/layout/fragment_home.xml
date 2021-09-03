@@ -41,7 +41,5 @@
         android:textAlignment="center"
         android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/homeList"
-        app:layout_constraintVertical_bias="1.0"
-        tools:text="@string/large_text" />
+        app:layout_constraintTop_toTopOf="@id/homeList" />
 </androidx.constraintlayout.widget.ConstraintLayout>

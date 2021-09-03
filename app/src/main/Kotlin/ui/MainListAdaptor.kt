@@ -42,6 +42,8 @@ class MainListAdaptor(
         thisView.text = item.title
         thisView.background = ResourcesCompat.getDrawable(
             thisView.resources, backGround, thisView.context.theme)
+        bindCommands(holderOfCell.binding,position)
+
 //        val category = viewModel.currentCategory.value
 //        Log.i("MainListAdapter","Category = $category")
 //        when {

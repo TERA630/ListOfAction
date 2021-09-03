@@ -22,4 +22,8 @@
         android:name="ui.slideshow.SlideshowFragment"
         android:label="@string/menu_slideshow"
         tools:layout="@layout/fragment_slideshow" />
+    <fragment
+        android:id="@+id/detailFragment"
+        android:name="io.terameteo.listofaction.ui.DetailFragment"
+        android:label="DetailFragment" />
 </navigation>
