@@ -4,19 +4,16 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.google.android.flexbox.*
 import io.terameteo.listofaction.*
-import io.terameteo.listofaction.R
 import io.terameteo.listofaction.databinding.FragmentHomeBinding
 
 class HomeFragment : Fragment() {
     private val mViewModel: MainViewModel by activityViewModels()
     private lateinit var mBinding: FragmentHomeBinding
     private lateinit var mAdaptor: MainListAdaptor
-
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -34,9 +31,10 @@ class HomeFragment : Fragment() {
         mAdaptor = MainListAdaptor(
             viewModel = mViewModel,
             mViewModel.getDateStr(mViewModel.currentPage.valueOrZero(), DATE_EN))
+        mBinding.homeList.adapter = mAdaptor
 
-        val textView: TextView = mBinding.textHome
-        textView.setText(R.string.large_text)
+//        val textView: TextView = mBinding.textHome
+//        textView.setText(R.string.large_text)
 
         return mBinding.root
     }
