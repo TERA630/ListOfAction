@@ -69,7 +69,9 @@ class MainViewModel(private val itemDAO: ItemCollectionDAO,
         viewModelIOScope.launch { itemDAO.update(item) }
         currentReward.postValue(newValue)
     }
-
+    fun updateItem(item:ItemEntity){
+        itemDAO.update(item)
+    }
     fun appendItem(newTitle:String,newReward:Int,category:String){
         if(newTitle.isBlank()) return
         val newCategory = if( category.isBlank())  "Daily" else category
@@ -148,7 +150,6 @@ fun LiveData<List<ItemEntity>>.safetyGetList():List<ItemEntity> {
         list
     }
 }
-
 fun LiveData<List<CategoryWithChecked>>.getCategories():List<String> {
     val list = this.value
     return if (list.isNullOrEmpty()) {

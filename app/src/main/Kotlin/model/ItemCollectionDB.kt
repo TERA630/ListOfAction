@@ -8,8 +8,6 @@ import androidx.room.*
 
 // Livedataで返す様にすると､ スレッドを分けなくてもよくなる｡
 
-const val DEFAULT_CATEGORY= "daily"
-
 @Dao
 interface ItemCollectionDAO {
     /** 全データ取得 */

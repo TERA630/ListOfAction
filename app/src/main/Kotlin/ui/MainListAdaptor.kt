@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.MenuInflater
 import android.view.ViewGroup
 import androidx.core.content.res.ResourcesCompat
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -15,6 +16,7 @@ import io.terameteo.listofaction.model.ItemEntity
 import io.terameteo.listofaction.model.isDoneAt
 
 // VMと dateStr YYYY/m/d を渡されると list の historyに含まれているかをみて､BackGroundを切りかえて表示する｡
+// VMでcurrent dateStr:Livedata YYYY/m/d を持って参照するのでもいいのだが､Adapterの更新メソッドはいるかも｡
 
 class MainListAdaptor(
     private val viewModel: MainViewModel,
@@ -71,22 +73,22 @@ class MainListAdaptor(
             viewModel.flipItemHistory(getItem(position),dateStr)
             notifyItemChanged(position)
         }
-        binding.cellText.setOnLongClickListener {
-                view ->
-            //   val destination = MainFragmentDirections.actionMainFragmentToDetailFragment(getItem(position).id)
+        binding.cellText.setOnLongClickListener { view ->
             view.showContextMenu()
             true
         }
         binding.root.setOnCreateContextMenuListener { menu, v, menuInfo ->
+            // 毎回このOnCreateContextMenuが呼ばれる様｡
+
             MenuInflater(v.context).inflate(R.menu.menu_context,menu)
-//            menu.findItem(R.id.action_edit_item).setOnMenuItemClickListener {
-//                val idToEdit = getItem(position).id
-//                val destination = .actionMainFragmentToDetailFragment(idToEdit)
-//                Log.i("MainListAdapter","item $idToEdit at $position was edited.")
-//                v.findNavController().navigate(destination)
-//                notifyItemChanged(position)
-//                true
-//            }
+             menu.findItem(R.id.action_edit_item).setOnMenuItemClickListener {
+                val idToEdit = getItem(position).id
+                 Log.i("MainListAdapter","$idToEdit was to edit.")
+                val destination = HomeFragmentDirections.actionNavHomeToDetailFragment(idToEdit)
+                 v.findNavController().navigate(destination)
+                 notifyItemChanged(position)
+                 true
+             }
             menu.findItem(R.id.action_delete_item).setOnMenuItemClickListener {
                 Log.i("MainListAdaptor","item was  to be deleted.")
                 viewModel.deleteItem(getItem(position))

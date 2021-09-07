@@ -19,6 +19,7 @@
     <string name="action_cancel">破棄</string>
     <string name="action_back">戻る</string>
     <string name="action_append">追加</string>
+    <string name="action_update">更新</string>
     <string name="action_edit">アイテム編集</string>
     <string name="delete_item">アイテム削除</string>
     <string name="edit_category">カテゴリを編集する</string>
@@ -111,7 +112,7 @@
         "All action takes place in a single environment. Objects are presented to the user without "
         "breaking the continuity of experience even as they transform and reorganize.\n"
         "Motion is meaningful and appropriate, serving to focus attention and maintain continuity. "
-        "Feedback is subtle yet clear. Transitions are efﬁcient yet coherent.\n\n"
+        "Feedback is subtle yet clear. Transitions are efficient yet coherent.\n\n"
 
         "3D world.\n\n"
 

@@ -18,6 +18,7 @@ const val CATEGORY_LIST = "categoryList"
 
 const val MY_MODEL="myModel"
 const val DEFAULT_REWARD = 30
+const val DEFAULT_CATEGORY = "Daily"
 
 class MyModel {
 

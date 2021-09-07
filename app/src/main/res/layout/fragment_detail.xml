@@ -14,10 +14,21 @@
         android:autofillHints="@string/titleCaption"
         android:ems="16"
         android:hint="@string/titleCaption"
+
         android:inputType="text"
+        android:minHeight="48dp"
         android:padding="@dimen/padding_detailFragment"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <AutoCompleteTextView
+        android:id="@+id/editCategory"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:minWidth="32dp"
+        android:minHeight="48dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/editTitle" />
 
     <EditText
         android:id="@+id/editReward"
@@ -27,26 +38,30 @@
         android:ems="8"
         android:hint="@string/rewardCaption"
         android:inputType="numberDecimal"
+        android:minHeight="48dp"
         android:padding="@dimen/padding_detailFragment"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTitle" />
+
 
     <Spinner
         android:id="@+id/spinner"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:minHeight="48dp"
         android:padding="@dimen/padding_detailFragment"
         app:layout_constraintBottom_toTopOf="@+id/detailOkButton"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editReward" />
 
+
     <Button
         android:id="@+id/detailOkButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:contentDescription="@string/press_to_append"
+        android:contentDescription="@string/action_append"
         android:padding="@dimen/padding_detailFragment"
-        android:text="@string/append"
+        android:text="@string/action_append"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/detailCancelButton"
         app:layout_constraintBottom_toBottomOf="parent"/>
@@ -56,10 +71,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="@dimen/padding_detailFragment"
-        android:text="@string/cancel"
-        app:layout_constraintStart_toEndOf="@id/detailOkButton"
+        android:text="@string/action_cancel"
+        android:textColor="#C5CAE9"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/detailOkButton" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
