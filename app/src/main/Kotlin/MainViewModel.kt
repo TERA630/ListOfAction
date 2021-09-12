@@ -21,12 +21,18 @@ class MainViewModel(private val itemDAO: ItemCollectionDAO,
     private val currentReward:MutableLiveData<Int> = MutableLiveData(0)
     val currentRewardStr = MediatorLiveData<String>()
     val currentPage = MutableLiveData(0)
-//    val currentCategory = MutableLiveData("")
-//    val usedCategories= MediatorLiveData<List<CategoryWithChecked>>()
+//   val currentCategory = MutableLiveData("")
+    val categories= mutableListOf<CategoryWithChecked>()
 
     fun initialize(_context:Context) {
         currentReward.postValue(myModel.loadRewardFromPreference(_context))
         currentRewardStr.addSource(currentReward) { value -> currentRewardStr.postValue("$value　円") }
+        val list = myModel.loadCategories(_context)
+        if(list.isNotEmpty()){
+            val categoryList = List(list.size){ i -> CategoryWithChecked(list[i],false) }
+            categories.clear()
+            categories.addAll(categoryList)
+        }
 
 //        currentCategory.postValue(myModel.loadCategoryFromPreference(_context))
 //        usedCategories.addSource(allItemList){
@@ -34,14 +40,7 @@ class MainViewModel(private val itemDAO: ItemCollectionDAO,
 //            val list = myModel.makeCategoryList(it)
 //            val newList = updateCategoryList(list)
 //            if(newList.isNotEmpty()) usedCategories.postValue(newList)
-//        }
-//        usedCategories.addSource(currentCategory){
-//            val list = usedCategories.value
-//            if(list.isNullOrEmpty()) return@addSource
-//            val newlist = List(list.size){
-//                index -> CategoryWithChecked(list[index].title,(list[index].title == it))
-//            }
-//            usedCategories.postValue(newlist)
+//
 //        }
     }
 //    private fun updateCategoryList(list:List<String>):List<CategoryWithChecked> {
@@ -52,6 +51,13 @@ class MainViewModel(private val itemDAO: ItemCollectionDAO,
     fun stateSave(_context: Context) {
         val reward = currentReward.value ?:0
         myModel.saveRewardToPreference(reward,_context)
+
+        if(categories.isNullOrEmpty()){
+            return
+        } else {
+            val list = List(categories.size){ i -> categories[i].title }
+            myModel.saveCategories(list,_context)
+        }
 //        myModel.saveCurrentCategory(currentCategory.value ?:"",_context)
     }
     fun flipItemHistory(item:ItemEntity,dateStr: String){
@@ -109,6 +115,13 @@ class MainViewModel(private val itemDAO: ItemCollectionDAO,
                 itemDAO.insert(item)
             }
         }
+    }
+    fun makeCategoryFromCurrentList(){
+        val itemList = allItemList.safetyGetList()
+        if(itemList.isNullOrEmpty()) return
+        val newList = myModel.makeCategoryList(itemList)
+        val newCategoryList = List(newList.size) { index -> CategoryWithChecked(newList[index],false) }
+        categories.addAll(newCategoryList)
     }
     fun getDateStr(backDate: Int, mode: Int): String {
         return when (mode) {
@@ -170,7 +183,7 @@ fun MediatorLiveData<List<String>>.safetyGet(position: Int):String{
 }
 fun LiveData<List<CategoryWithChecked>>.listSize():Int{
     val list = this.value
-    if(list.isNullOrEmpty()){return 0 }else{ return list.size}
+    return if( list.isNullOrEmpty() ) 0  else list.size
 }
 
 

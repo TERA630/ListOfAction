@@ -43,7 +43,6 @@ class HomeFragment : Fragment() {
             mBinding.dateShowing.text = mViewModel.getDateStr(it, DATE_JP)
             mAdaptor.dateChange(mViewModel.getDateStr(it, DATE_EN))
         }
-
         mViewModel.allItemList.observe(viewLifecycleOwner){
             if(it.isNullOrEmpty()) return@observe
             mAdaptor.submitList(it)
