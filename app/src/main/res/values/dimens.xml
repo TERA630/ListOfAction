@@ -12,6 +12,7 @@
     <dimen name="flex_item_border">3dp</dimen>
     <dimen name="nav_header_height">16dp</dimen>
     <dimen name="nav_header_vertical_spacing">16dp</dimen>
+    <dimen name="text_width_default">64dp</dimen>
 
 
 </resources>

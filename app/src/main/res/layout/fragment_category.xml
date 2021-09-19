@@ -7,26 +7,61 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+    <Button
+        android:id="@+id/backToMain2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="140dp"
+        android:layout_marginBottom="@dimen/activity_horizontal_margin"
+        android:text="@string/action_save"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/backToMain"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:text="@string/action_save" />
+
+    <Button
+        android:id="@+id/category_append2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/action_append"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/categoryList" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/categoryList"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-
-        android:layout_marginTop="132dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:itemCount="7"
         tools:layout_height="400dp" />
+    <EditText
+        android:id="@+id/new_category_editText"
+        android:layout_width="320dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/categoryList"
+        android:hint="@string/edit_category"
+        android:inputType="text"
+        android:autofillHints="no" />
+    <Button
+        android:id="@+id/category_append"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/action_append"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/categoryList"/>
+
     <Button
         android:id="@+id/make_list_from_item"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/categoryList"
+        app:layout_constraintTop_toBottomOf="@id/category_append"
         android:textColor="@color/white"
-        android:title = "@string/make_category_from_items"
+        android:text="@string/make_category_from_items"
         tools:textColor="@color/white"
         tools:text = "@string/make_category_from_items"/>
 
@@ -34,6 +69,7 @@
         android:id="@+id/backToMain"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/activity_vertical_margin"
         android:text="@string/action_back"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />

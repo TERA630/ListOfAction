@@ -25,7 +25,8 @@
     <string name="edit_category">カテゴリ編集</string>
     <string name="navigate_to_list_week">7日間のリスト</string>
     <string name="make_list_from_resource">デフォルトのアイテムをロードする</string>
-    <string name="make_category_from_items">現在のアイテムからカテゴリを作成する</string>
+    <string name="make_category_from_items">アイテムからカテゴリに反映する</string>
+    <string name="edit_new_category">新しいカテゴリ名を入れて下さい</string>
 
     <!-- Layout画面用文字列 -->
     <string name="test_reward">1200円</string>

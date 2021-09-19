@@ -97,6 +97,15 @@ class MainViewModel(private val itemDAO: ItemCollectionDAO,
             Log.i(VIEW_MODEL,"item $newTitle was appended to List")
         }
     }
+    fun appendCategory(_category:String){
+        val duplicateCategory = categories.find { it.title == _category }
+        if(duplicateCategory == null) {
+            val newCategory = CategoryWithChecked(_category,false)
+            categories.add(newCategory)
+        }  else {
+            Log.w(VIEW_MODEL,"new category already exists.")
+        }
+    }
     fun deleteItem(item: ItemEntity){
         viewModelIOScope.launch {
             itemDAO.delete(item)
@@ -122,6 +131,7 @@ class MainViewModel(private val itemDAO: ItemCollectionDAO,
         val newList = myModel.makeCategoryList(itemList)
         val newCategoryList = List(newList.size) { index -> CategoryWithChecked(newList[index],false) }
         categories.addAll(newCategoryList)
+        categories.distinctBy { it.title }// タイトル重複は避ける
     }
     fun getDateStr(backDate: Int, mode: Int): String {
         return when (mode) {

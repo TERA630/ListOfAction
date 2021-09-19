@@ -32,7 +32,13 @@ class CategoryFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         mBinding.makeListFromItem.setOnClickListener {
             mViewModel.makeCategoryFromCurrentList()
+            mAdapter.notifyDataSetChanged()
         }
-        mAdapter.notifyDataSetChanged()
+
+        mBinding.categoryAppend.setOnClickListener {
+            val category = mBinding.newCategoryEditText.text.toString()
+            if(category.isBlank()) return@setOnClickListener
+            else mViewModel.appendCategory(category)
+        }
     }
 }
